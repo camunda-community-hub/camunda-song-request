@@ -8,7 +8,7 @@ Here's the idea: Let's say you're in charge of planning a family reunion, or a s
 
 This example shows how easy it is to orchestrate a variety of services with Camunda 8. We'll use Send grid to send emails, use a Google Form and Cloud Function to get song requests, and even use OpenAI to check if the songs are appropriate for this party.
 
-## Running this example yourself
+## How to Run
 
 Here are the steps to see this working: 
 
@@ -48,6 +48,8 @@ OPENAI_API_KEY
 - google.form.url https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=sf_link
 - cloud function https://us-central1-camunda-researchanddevelopment.cloudfunctions.net/dave-song-request-gcp-http
 
+## Payload to start an Instance: 
+
 ```json
 {
   "person": {
@@ -61,3 +63,23 @@ OPENAI_API_KEY
   }
 }
 ```
+
+## Payload to submit Song Request: 
+
+```json
+{
+  "messageName": "Message_formSubmitted",
+  "correlationKey": "david.paroulek@camunda.com",
+  "formData": {
+    "artist": "Beatles",
+    "songTitle": "Here comes the sun"
+  }
+}
+```
+
+## Test Locally
+
+```shell
+mvn function:run
+```
+

@@ -5,10 +5,12 @@ import io.camunda.zeebe.client.ZeebeClient;
 import io.camunda.zeebe.client.api.response.ProcessInstanceEvent;
 import io.camunda.zeebe.client.api.response.PublishMessageResponse;
 import java.util.Map;
+import org.springframework.stereotype.Service;
 
+@Service
 public class ZeebeService {
 
-  public static ZeebeClient fromAppConstants() {
+  public ZeebeClient fromAppConstants() {
     CredentialsProvider cp =
         CredentialsProvider.newCredentialsProviderBuilder()
             .audience(
@@ -31,8 +33,8 @@ public class ZeebeService {
 
   ZeebeClient zeebeClient;
 
-  public ZeebeService(ZeebeClient zeebeClient) {
-    this.zeebeClient = zeebeClient;
+  public ZeebeService() {
+    zeebeClient = fromAppConstants();
   }
 
   public long createInstance(Map<String, Object> variables) {
