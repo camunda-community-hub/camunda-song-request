@@ -4,82 +4,93 @@
 
 This is an example of how to use the [Camunda 8 Platform](https://docs.camunda.io) to collect song requests from friends before a party.
 
-Here's the idea: Let's say you're in charge of planning a family reunion, or a school dance. You're planning to have a DJ or Band. You'd like to allow your friends to recommend songs for the party. One simple solution is to use a Google Form. But that leaves a lot of manual work for  you. You'll have to follow up with everyone to see if they were able to access the form, you might want to manual periodic reminders and then you'll have to manually send the results to the Band or DJ. Let's see how we can improve and automate this process. We can use Camunda Platform 8 to not only make this a better experience for your friends, but this should also make less work for you. 
+Let's say you're in charge of planning a family reunion, or a school dance. You're planning to have a DJ or Band. You'd like to allow your friends to recommend songs for the party. One simple solution is to use a Google Forms, which are convenient and really great, but you'd rather not have to manually email google form links out to everyone manually. It would also be nice to periodically remind folks to fill out the form, but you don't want to overwhelm them with emails. And it would also be cool to somehow do a sanity check on song requests and filter out anything that's not appropriate, or just not right for the party. 
 
-This example shows how easy it is to orchestrate a variety of services with Camunda 8. We'll use Send grid to send emails, use a Google Form and Cloud Function to get song requests, and even use OpenAI to check if the songs are appropriate for this party.
+Let's see how we can build this process. We'll use Camunda Platform 8 and try to make this nice experience for your friends, and also automate as much as possible so it's less work for you. 
 
-## How to Run
+This example shows how to orchestrate a variety of services with Camunda 8. We'll use Send grid to send an email with a link to a Google Form. We can use a Google Cloud Function to send the results back when our friends submit the form. We'll even use OpenAI to get the lyrics for songs (Karaoke!) and also do a sanity check about whether the songs are a good match for the party.
+
+# The Process Diagram
+
+[song-requests.bpmn](src/main/resources/song-requests.bpmn)
+
+![](src/main/resources/song-requests.png)
+
+# Installation and Setup
 
 Here are the steps to see this working: 
 
 1. Sign up for a trial account on https://camunda.io. Create a cluster and create [API Client Credentials](https://docs.camunda.io/docs/guides/setup-client-connection-credentials).
-2. Edit `AppConstants.java` and add your cluster id, client id, and secret. Note that this code can be improved to use Environment variables, but for now, these values are hard coded. 
+2. Edit `AppConstants.java` and add your cluster id, client id, and secret. (Note that eventually this code should be improved to use `application.properties`, but for now, these values are hard coded) 
 3. Use the following command to compile and build a jar file: 
 ```shell
 mvn clean install
 ```
-4. If you don't have one already, create a GCP account and setup the `gcloud` command line tool
-5. Deploy this project as a Google Cloud Function like so. 
+4. If you don't have one already, create a Google Cloud Platform (GCP) account and setup the `gcloud` command line tool
+5. Deploy this project as a Google Cloud Function by running the following command:
 ```shell
 gcloud functions deploy dave-song-request-gcp-http \
---entry-point org.springframework.cloud.function.adapter.gcp.GcfJarLauncher \
---runtime java17 \
---trigger-http \
---source target/deploy \
---memory 512MB
+  --entry-point org.springframework.cloud.function.adapter.gcp.GcfJarLauncher \
+  --runtime java17 \
+  --trigger-http \
+  --source target/deploy \
+  --memory 512MB
 ```
-6. If you don't have one already, create an OpenAI account and create an OpenAI API Key
-8. Upload the `src/main/resources/song-request.bpm` to your SaaS web modeler (or open in desktop modeler). 
-9. Deploy the Song Request process to your Camunda 8 SaaS Cluster. 
-11. Create the following secrets in your Camunda 8 SaaS environment.
+6. TODO: describe how to configure google form
+7. If you don't have one already, create an OpenAI account and create an OpenAI API Key
+8. Create a Camunda SaaS Secret named `SENDGRID_API_KEY` with your OpenAI API Key
+9. If you don't have one already, create a Sendgrid account and create an API Key
+10. TODO: describe how to configure Send grid templates
+11. Create a Camunda SaaS Secret named `OPENAI_API_KEY` with your OpenAI API Key
+12. Upload the `src/main/resources/song-request.bpm` file to your SaaS web modeler (or open in desktop modeler). 
+13. Deploy the Song Request process to your Camunda 8 SaaS Cluster. 
+14. Create the following secrets in your Camunda 8 SaaS environment.
 
-```shell
-SENDGRID_API_KEY
-OPENAI_API_KEY
-```
+# Start a Process Instance
 
-11. Run the Lambda function passing a payload like the following. This should create an instance of the Trip Booking Process Instance: 
+Start the process by passing the name and email of a friend or family member. The process will email them and ask them to submit a request via a Google Form. 
 
-## Inputs
+When starting a process, pass an initial payload like this. Replace `<FRIEND_NAME>` and `<FRIEND_EMAIL>` with a friend's name and email. 
 
-- SENDGRID_API_KEY (secret)
-- person.name
-- person.email
-- google.form.url https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=sf_link
-- cloud function https://us-central1-camunda-researchanddevelopment.cloudfunctions.net/dave-song-request-gcp-http
+Replace `<GOOGLE_FORM_ID>` with the id of your google form. 
 
-## Payload to start an Instance: 
+Also feel free to change the event type to whatever you want. Maybe a `family reunion`, or `school dance`, or `birthday party`?
 
 ```json
 {
   "person": {
-    "name": "Dave",
-    "email": "david.paroulek@camunda.com"
+    "name": "<FRIEND_NAME>",
+    "email": "<FRIEND_EMAIL>"
   },
+  "eventType": "wedding",
   "google": {
     "form": {
-      "url": "https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=sf_link"
+      "url": "https://docs.google.com/forms/d/e/<GOOGLE_FORM_ID>/viewform?usp=sf_link"
     }
   }
 }
 ```
 
-## Payload to submit Song Request: 
-
-```json
-{
-  "messageName": "Message_formSubmitted",
-  "correlationKey": "david.paroulek@camunda.com",
-  "formData": {
-    "artist": "Beatles",
-    "songTitle": "Here comes the sun"
-  }
-}
-```
+# Development
 
 ## Test Locally
 
 ```shell
 mvn function:run
+```
+
+## Sample payload to submit Song Request
+
+This is the data structure representing instance variables sent Google Cloud Function:
+
+```json
+{
+  "messageName": "Message_formSubmitted",
+  "correlationKey": "<email>",
+  "formData": {
+    "artist": "<artist>",
+    "songTitle": "<title>"
+  }
+}
 ```
 

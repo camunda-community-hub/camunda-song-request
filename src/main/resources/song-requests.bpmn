@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="47aa12c" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0" camunda:diagramRelationId="3e2c2cfc-8109-4414-8bee-9a99d44dc13a">
+  <bpmn:process id="Process_songRequest" name="Song Request" isExecutable="true">
+    <bpmn:extensionElements>
+      <zeebe:userTaskForm id="userTaskForm_10je4nr">{
+  "components": [
+    {
+      "label": "Artist",
+      "type": "textfield",
+      "id": "Field_17dwxcl",
+      "key": "field_artist",
+      "disabled": true
+    },
+    {
+      "label": "Song Title",
+      "type": "textfield",
+      "id": "Field_1iecv4m",
+      "key": "field_songTitle",
+      "disabled": true
+    },
+    {
+      "label": "Song Lyrics",
+      "type": "textarea",
+      "id": "Field_0donx7e",
+      "key": "field_songLyrics",
+      "disabled": true
+    },
+    {
+      "values": [
+        {
+          "label": "Yes, this song would be great!",
+          "value": "YES"
+        },
+        {
+          "label": "No, this song isn't appropriate",
+          "value": "NO"
+        }
+      ],
+      "label": "Approve Song?",
+      "type": "select",
+      "id": "Field_1ba0saf",
+      "key": "field_approveSong",
+      "description": "What do you think? Would this song be good for this event?",
+      "defaultValue": "approve"
+    }
+  ],
+  "schemaVersion": 7,
+  "exporter": {
+    "name": "Camunda Web Modeler",
+    "version": "47aa12c"
+  },
+  "type": "default",
+  "id": "Form_9a55c233-d636-4df1-babf-1b6da92af9c1",
+  "executionPlatform": "Camunda Cloud",
+  "executionPlatformVersion": "8.2.0"
+}</zeebe:userTaskForm>
+    </bpmn:extensionElements>
+    <bpmn:sequenceFlow id="Flow_1fptfsv" sourceRef="StartEvent_1" targetRef="Activity_1efnhia" />
+    <bpmn:serviceTask id="Activity_1efnhia" name="Ask for Song Request via Email" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="secrets.SENDGRID_API_KEY" target="apiKey" />
+          <zeebe:input source="David Paroulek" target="from.name" />
+          <zeebe:input source="david.paroulek@camunda.com" target="from.email" />
+          <zeebe:input source="=person.name" target="to.name" />
+          <zeebe:input source="= person.email" target="to.email" />
+          <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="d-647678a0f9a8493695b54d8e04341750" target="template.id" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;! I&#39;m collecting song requests for the upcoming &#34; + eventType + &#34;. Want to make a song request? If so, click below and fill out the form, thanks!&#34;,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1fptfsv</bpmn:incoming>
+      <bpmn:incoming>Flow_02wvxue</bpmn:incoming>
+      <bpmn:outgoing>Flow_1oxifje</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_18q1yaj" sourceRef="Event_0t5u3bb" targetRef="Activity_1rc48h6" />
+    <bpmn:intermediateCatchEvent id="Event_0t5u3bb" name="Form Submitted">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=(formData.itemResponses[title = &#34;Artist&#34;])[1].answer" target="song.artist" />
+          <zeebe:output source="=(formData.itemResponses[title = &#34;Song Title&#34;])[1].answer" target="song.title" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1ebaflo</bpmn:incoming>
+      <bpmn:outgoing>Flow_18q1yaj</bpmn:outgoing>
+      <bpmn:messageEventDefinition id="MessageEventDefinition_0rg82gl" messageRef="Message_0hujtgf" />
+    </bpmn:intermediateCatchEvent>
+    <bpmn:intermediateCatchEvent id="Event_0xc3wbw" name="Wait to send reminder">
+      <bpmn:incoming>Flow_00xidjq</bpmn:incoming>
+      <bpmn:outgoing>Flow_02wvxue</bpmn:outgoing>
+      <bpmn:timerEventDefinition id="TimerEventDefinition_1nl8jig">
+        <bpmn:timeDuration xsi:type="bpmn:tFormalExpression">P3D</bpmn:timeDuration>
+      </bpmn:timerEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="Flow_02wvxue" sourceRef="Event_0xc3wbw" targetRef="Activity_1efnhia" />
+    <bpmn:endEvent id="Event_04rxyr5">
+      <bpmn:incoming>Flow_1srmgez</bpmn:incoming>
+      <bpmn:incoming>Flow_0wbvocd</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:startEvent id="StartEvent_1" name="Create Instance">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:output source="=if is defined(google.form.url) &#10;then google.form.url &#10;else &#34;https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=sf_link&#34;" target="google.form.url" />
+          <zeebe:output source="=if is defined(person.name) &#10;then person.name &#10;else &#34;Dave&#34;" target="person.name" />
+          <zeebe:output source="=if is defined(person.email) &#10;then person.email &#10;else &#34;david.paroulek@camunda.com&#34;" target="person.email" />
+          <zeebe:output source="=&#34;wedding&#34;" target="eventType" />
+        </zeebe:ioMapping>
+      </bpmn:extensionElements>
+      <bpmn:outgoing>Flow_1fptfsv</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:eventBasedGateway id="Gateway_1sqtjfv">
+      <bpmn:incoming>Flow_1oxifje</bpmn:incoming>
+      <bpmn:outgoing>Flow_00xidjq</bpmn:outgoing>
+      <bpmn:outgoing>Flow_1ebaflo</bpmn:outgoing>
+    </bpmn:eventBasedGateway>
+    <bpmn:sequenceFlow id="Flow_00xidjq" sourceRef="Gateway_1sqtjfv" targetRef="Event_0xc3wbw" />
+    <bpmn:sequenceFlow id="Flow_1oxifje" sourceRef="Activity_1efnhia" targetRef="Gateway_1sqtjfv" />
+    <bpmn:sequenceFlow id="Flow_1ebaflo" sourceRef="Gateway_1sqtjfv" targetRef="Event_0t5u3bb" />
+    <bpmn:sequenceFlow id="Flow_08o2aet" sourceRef="Activity_1rc48h6" targetRef="Gateway_1voduht" />
+    <bpmn:serviceTask id="Activity_1rc48h6" name="Analyze Song Request" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2018%2018%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M17.0335%208.99997C17.0335%2013.4475%2013.4281%2017.0529%208.98065%2017.0529C4.53316%2017.0529%200.927765%2013.4475%200.927765%208.99997C0.927765%204.55248%204.53316%200.947083%208.98065%200.947083C13.4281%200.947083%2017.0335%204.55248%2017.0335%208.99997Z%22%20fill%3D%22%23505562%22%2F%3E%0A%3Cpath%20d%3D%22M4.93126%2014.1571L6.78106%203.71471H10.1375C11.1917%203.71471%2011.9824%203.98323%2012.5095%204.52027C13.0465%205.04736%2013.315%205.73358%2013.315%206.57892C13.315%207.44414%2013.0714%208.15522%2012.5841%208.71215C12.1067%209.25913%2011.4553%209.63705%2010.6298%209.8459L12.0619%2014.1571H10.3315L9.03364%2010.0249H7.24351L6.51254%2014.1571H4.93126ZM7.49711%208.59281H9.24248C9.99832%208.59281%2010.5901%208.42374%2011.0177%208.08561C11.4553%207.73753%2011.6741%207.26513%2011.6741%206.66842C11.6741%206.19106%2011.5249%205.81811%2011.2265%205.54959C10.9282%205.27113%2010.4558%205.1319%209.80936%205.1319H8.10874L7.49711%208.59281Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E%0A">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="secrets.OPENAI_API_KEY" target="authentication.token" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="={&#10;    &#34;model&#34;: &#34;text-davinci-003&#34;,&#10;    &#34;prompt&#34;: &#34;Is the song \&#34;&#34;+song.title+&#34;\&#34; by \&#34;&#34;+song.artist+&#34;\&#34; appropriate for a &#34;+eventType+&#34;?&#34;,&#10;    &#34;max_tokens&#34;: 1024,&#10;    &#34;temperature&#34;: 0&#10;}" target="body" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="openaiResponse1" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;result&#34;: extract(body.choices[1].text, &#34;[^\n]+&#34;)[1],&#10;  &#34;appropriate&#34;: upper case(split(result, &#34;,\s&#34;)[1])&#10;}" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18q1yaj</bpmn:incoming>
+      <bpmn:outgoing>Flow_08o2aet</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:exclusiveGateway id="Gateway_1voduht" name="Is this song appropriate?" default="Flow_0w1px0x">
+      <bpmn:incoming>Flow_0ji8kku</bpmn:incoming>
+      <bpmn:incoming>Flow_08o2aet</bpmn:incoming>
+      <bpmn:outgoing>Flow_0k3qziv</bpmn:outgoing>
+      <bpmn:outgoing>Flow_12xluzz</bpmn:outgoing>
+      <bpmn:outgoing>Flow_0w1px0x</bpmn:outgoing>
+    </bpmn:exclusiveGateway>
+    <bpmn:sequenceFlow id="Flow_0k3qziv" name="Yes" sourceRef="Gateway_1voduht" targetRef="Activity_0x5mude">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=appropriate = "YES"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:sequenceFlow id="Flow_1srmgez" sourceRef="Activity_0x5mude" targetRef="Event_04rxyr5" />
+    <bpmn:serviceTask id="Activity_0x5mude" name="Notify Song Request Accepted!" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="secrets.SENDGRID_API_KEY" target="apiKey" />
+          <zeebe:input source="David Paroulek" target="from.name" />
+          <zeebe:input source="david.paroulek@camunda.com" target="from.email" />
+          <zeebe:input source="=person.name" target="to.name" />
+          <zeebe:input source="= person.email" target="to.email" />
+          <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, good news, your song request was accepted! I&#39;m looking forward to rocking out to &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;! Here&#39;s more details: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0k3qziv</bpmn:incoming>
+      <bpmn:outgoing>Flow_1srmgez</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_12xluzz" name="No" sourceRef="Gateway_1voduht" targetRef="Activity_0xlgndj">
+      <bpmn:conditionExpression xsi:type="bpmn:tFormalExpression">=appropriate = "NO"</bpmn:conditionExpression>
+    </bpmn:sequenceFlow>
+    <bpmn:serviceTask id="Activity_0xlgndj" name="Notify Song Request Rejected" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="secrets.SENDGRID_API_KEY" target="apiKey" />
+          <zeebe:input source="David Paroulek" target="from.name" />
+          <zeebe:input source="david.paroulek@camunda.com" target="from.email" />
+          <zeebe:input source="=person.name" target="to.name" />
+          <zeebe:input source="= person.email" target="to.email" />
+          <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, sorry, but your song request of &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34; is not appropritate for this event. Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_12xluzz</bpmn:incoming>
+      <bpmn:outgoing>Flow_0wbvocd</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0wbvocd" sourceRef="Activity_0xlgndj" targetRef="Event_04rxyr5" />
+    <bpmn:sequenceFlow id="Flow_0w1px0x" name="Maybe" sourceRef="Gateway_1voduht" targetRef="Activity_03rrb3p" />
+    <bpmn:userTask id="Activity_1snrbr5" name="Review Song Request">
+      <bpmn:extensionElements>
+        <zeebe:ioMapping>
+          <zeebe:input source="=song.title" target="field_songTitle" />
+          <zeebe:input source="=song.artist" target="field_artist" />
+          <zeebe:input source="=song.lyrics" target="field_songLyrics" />
+          <zeebe:output source="=field_approveSong" target="appropriate" />
+        </zeebe:ioMapping>
+        <zeebe:formDefinition formKey="camunda-forms:bpmn:userTaskForm_10je4nr" />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0yy68t2</bpmn:incoming>
+      <bpmn:outgoing>Flow_0ji8kku</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="Flow_1jdcjas" sourceRef="Activity_03rrb3p" targetRef="Activity_18eotyx" />
+    <bpmn:serviceTask id="Activity_03rrb3p" name="Notify Song Request Under Review" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="secrets.SENDGRID_API_KEY" target="apiKey" />
+          <zeebe:input source="David Paroulek" target="from.name" />
+          <zeebe:input source="david.paroulek@camunda.com" target="from.email" />
+          <zeebe:input source="=person.name" target="to.name" />
+          <zeebe:input source="= person.email" target="to.email" />
+          <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
+          <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, thanks, your song request, &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;, is under review :-). Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders />
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_0w1px0x</bpmn:incoming>
+      <bpmn:outgoing>Flow_1jdcjas</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0ji8kku" sourceRef="Activity_1snrbr5" targetRef="Gateway_1voduht" />
+    <bpmn:serviceTask id="Activity_18eotyx" name="Get Song Lyrics" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2018%2018%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M17.0335%208.99997C17.0335%2013.4475%2013.4281%2017.0529%208.98065%2017.0529C4.53316%2017.0529%200.927765%2013.4475%200.927765%208.99997C0.927765%204.55248%204.53316%200.947083%208.98065%200.947083C13.4281%200.947083%2017.0335%204.55248%2017.0335%208.99997Z%22%20fill%3D%22%23505562%22%2F%3E%0A%3Cpath%20d%3D%22M4.93126%2014.1571L6.78106%203.71471H10.1375C11.1917%203.71471%2011.9824%203.98323%2012.5095%204.52027C13.0465%205.04736%2013.315%205.73358%2013.315%206.57892C13.315%207.44414%2013.0714%208.15522%2012.5841%208.71215C12.1067%209.25913%2011.4553%209.63705%2010.6298%209.8459L12.0619%2014.1571H10.3315L9.03364%2010.0249H7.24351L6.51254%2014.1571H4.93126ZM7.49711%208.59281H9.24248C9.99832%208.59281%2010.5901%208.42374%2011.0177%208.08561C11.4553%207.73753%2011.6741%207.26513%2011.6741%206.66842C11.6741%206.19106%2011.5249%205.81811%2011.2265%205.54959C10.9282%205.27113%2010.4558%205.1319%209.80936%205.1319H8.10874L7.49711%208.59281Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E%0A">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/completions" target="url" />
+          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
+          <zeebe:input source="secrets.OPENAI_API_KEY" target="authentication.token" />
+          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
+          <zeebe:input source="={&#10;    &#34;model&#34;: &#34;text-davinci-003&#34;,&#10;    &#34;prompt&#34;: &#34;What are the lyrics for &#39;&#34;+song.title+&#34;&#39; by &#39;&#34;+song.artist+&#34;&#39;?&#34;,&#10;    &#34;max_tokens&#34;: 1024,&#10;    &#34;temperature&#34;: 0&#10;}" target="body" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="openaiResponse2" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;song&#34;: {&#10;    &#34;lyrics&#34;: extract(body.choices[1].text, &#34;[^\n]+&#34;)[1]&#10;  }&#10;}" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1jdcjas</bpmn:incoming>
+      <bpmn:outgoing>Flow_0yy68t2</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_0yy68t2" sourceRef="Activity_18eotyx" targetRef="Activity_1snrbr5" />
+    <bpmn:textAnnotation id="TextAnnotation_0krxina">
+      <bpmn:text>Email the person a link to a google form. When the form is submitted, it calls a AWS Lambda Function and a row will be entered into a google sheet.</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0qf1gkf" sourceRef="Activity_1efnhia" targetRef="TextAnnotation_0krxina" />
+    <bpmn:textAnnotation id="TextAnnotation_1458xg3">
+      <bpmn:text>When the Google Form is submitted, it calls an AWS Lambda function which uses the Zeebe GRPC API to publish a message to allow the process to continue</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0k04mfi" sourceRef="Event_0t5u3bb" targetRef="TextAnnotation_1458xg3" />
+    <bpmn:textAnnotation id="TextAnnotation_0mx75ie">
+      <bpmn:text>Ask OpenAI whether this song is appropriate for the type of event</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0g55kw6" sourceRef="Activity_1rc48h6" targetRef="TextAnnotation_0mx75ie" />
+    <bpmn:textAnnotation id="TextAnnotation_05lge6g">
+      <bpmn:text>Start an instance with a payload containing `person.name`, `person.email`, and `eventType`</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0ns9trk" sourceRef="StartEvent_1" targetRef="TextAnnotation_05lge6g" />
+  </bpmn:process>
+  <bpmn:message id="Message_0hujtgf" name="Message_formSubmitted">
+    <bpmn:extensionElements>
+      <zeebe:subscription correlationKey="=person.email" />
+    </bpmn:extensionElements>
+  </bpmn:message>
+  <bpmn:message id="Message_1uqdi99" name="Message_createInstance" />
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_songRequest">
+      <bpmndi:BPMNShape id="Activity_1na0nq0_di" bpmnElement="Activity_1efnhia" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="400" y="238" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_0zcioxj_di" bpmnElement="Event_0t5u3bb">
+        <dc:Bounds x="692" y="260" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="671" y="303" width="79" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1jjj38w_di" bpmnElement="Event_0xc3wbw">
+        <dc:Bounds x="502" y="372" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="492" y="415" width="61" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_17x2x2y_di" bpmnElement="StartEvent_1">
+        <dc:Bounds x="232" y="260" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="211" y="303" width="78" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_05p7m0s_di" bpmnElement="Gateway_1sqtjfv">
+        <dc:Bounds x="555" y="253" width="50" height="50" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1t7491d_di" bpmnElement="Activity_1rc48h6" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="790" y="238" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0krxina_di" bpmnElement="TextAnnotation_0krxina">
+        <dc:Bounds x="350" y="120" width="188" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_1458xg3_di" bpmnElement="TextAnnotation_1458xg3">
+        <dc:Bounds x="590" y="120" width="200" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_0mx75ie_di" bpmnElement="TextAnnotation_0mx75ie">
+        <dc:Bounds x="860" y="120" width="198" height="49" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="TextAnnotation_05lge6g_di" bpmnElement="TextAnnotation_05lge6g">
+        <dc:Bounds x="160" y="120" width="139" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1shp747_di" bpmnElement="Event_04rxyr5">
+        <dc:Bounds x="1302" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Gateway_1voduht_di" bpmnElement="Gateway_1voduht" isMarkerVisible="true">
+        <dc:Bounds x="985" y="253" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="939" y="236" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01is50u_di" bpmnElement="Activity_0x5mude" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1120" y="140" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1big0x0_di" bpmnElement="Activity_0xlgndj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1120" y="238" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_144et18_di" bpmnElement="Activity_03rrb3p" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1120" y="340" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0q3po0p_di" bpmnElement="Activity_18eotyx" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1120" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_065siqv_di" bpmnElement="Activity_1snrbr5">
+        <dc:Bounds x="950" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Flow_1fptfsv_di" bpmnElement="Flow_1fptfsv">
+        <di:waypoint x="268" y="278" />
+        <di:waypoint x="400" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_18q1yaj_di" bpmnElement="Flow_18q1yaj">
+        <di:waypoint x="728" y="278" />
+        <di:waypoint x="790" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_02wvxue_di" bpmnElement="Flow_02wvxue">
+        <di:waypoint x="502" y="390" />
+        <di:waypoint x="450" y="390" />
+        <di:waypoint x="450" y="318" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_00xidjq_di" bpmnElement="Flow_00xidjq">
+        <di:waypoint x="580" y="303" />
+        <di:waypoint x="580" y="390" />
+        <di:waypoint x="538" y="390" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1oxifje_di" bpmnElement="Flow_1oxifje">
+        <di:waypoint x="500" y="278" />
+        <di:waypoint x="555" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1ebaflo_di" bpmnElement="Flow_1ebaflo">
+        <di:waypoint x="605" y="278" />
+        <di:waypoint x="692" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_08o2aet_di" bpmnElement="Flow_08o2aet">
+        <di:waypoint x="890" y="278" />
+        <di:waypoint x="985" y="278" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0k3qziv_di" bpmnElement="Flow_0k3qziv">
+        <di:waypoint x="1010" y="253" />
+        <di:waypoint x="1010" y="180" />
+        <di:waypoint x="1120" y="180" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1071" y="162" width="18" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1srmgez_di" bpmnElement="Flow_1srmgez">
+        <di:waypoint x="1220" y="180" />
+        <di:waypoint x="1320" y="180" />
+        <di:waypoint x="1320" y="212" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_12xluzz_di" bpmnElement="Flow_12xluzz">
+        <di:waypoint x="1035" y="278" />
+        <di:waypoint x="1120" y="278" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1072" y="263" width="15" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0wbvocd_di" bpmnElement="Flow_0wbvocd">
+        <di:waypoint x="1220" y="278" />
+        <di:waypoint x="1320" y="278" />
+        <di:waypoint x="1320" y="248" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0w1px0x_di" bpmnElement="Flow_0w1px0x">
+        <di:waypoint x="1020" y="293" />
+        <di:waypoint x="1020" y="380" />
+        <di:waypoint x="1120" y="380" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="1063" y="353" width="34" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1jdcjas_di" bpmnElement="Flow_1jdcjas">
+        <di:waypoint x="1170" y="420" />
+        <di:waypoint x="1170" y="450" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0qf1gkf_di" bpmnElement="Association_0qf1gkf">
+        <di:waypoint x="436" y="238" />
+        <di:waypoint x="424" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0k04mfi_di" bpmnElement="Association_0k04mfi">
+        <di:waypoint x="702" y="262" />
+        <di:waypoint x="674" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0g55kw6_di" bpmnElement="Association_0g55kw6">
+        <di:waypoint x="860" y="238" />
+        <di:waypoint x="893" y="169" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Association_0ns9trk_di" bpmnElement="Association_0ns9trk">
+        <di:waypoint x="245" y="261" />
+        <di:waypoint x="229" y="204" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ji8kku_di" bpmnElement="Flow_0ji8kku">
+        <di:waypoint x="1000" y="450" />
+        <di:waypoint x="1000" y="293" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yy68t2_di" bpmnElement="Flow_0yy68t2">
+        <di:waypoint x="1120" y="490" />
+        <di:waypoint x="1050" y="490" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
