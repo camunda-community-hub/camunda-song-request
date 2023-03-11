@@ -94,3 +94,73 @@ This is the data structure representing instance variables sent Google Cloud Fun
 }
 ```
 
+## Google Forms Apps Script
+
+```javascript
+/**
+ * This is a generic function that sends data to a url which publishes a message to Camunda 8 environment. 
+ * 
+ * The url expects a `messageName` and `correlationKey`.
+ * 
+ * The `formDataJson` argument will be stored as a Camunda process variable named `formData`
+ */
+function publishCamundaMessage(url, camundaMessageName, correlationKey, formDataJson) {
+  
+  var data = {
+    'messageName': camundaMessageName,
+    'correlationKey': correlationKey,
+    'formData': formDataJson
+  };
+
+  var options = {
+    'method': 'post',
+    'contentType': 'application/json',
+    'payload': JSON.stringify(data)
+  };
+
+  console.log("Attempting POST");
+  console.log(options);
+
+  var response = UrlFetchApp.fetch(url, options);
+  console.log(response.getContentText());
+  
+  return response;
+}
+
+/**
+ * This is very simplistic converstion of a FormResponse to json
+ */
+function formResponseToJson(formResponse) {
+
+  var result = {
+    'itemResponses': []
+  }
+
+  var itemResponses = formResponse.getItemResponses();
+  for (var i=0; i<itemResponses.length; i++) {
+    var itemResponse = itemResponses[i];
+    var answer = itemResponse.getResponse();
+
+    var itemResponseJson = {
+      'title': itemResponse.getItem().getTitle(),
+      'answer': answer
+    };
+    result.itemResponses.push(itemResponseJson);
+  }
+
+  return result;
+}
+
+function onFormSubmit(e) {
+  var formResponse = e.response;
+
+  var url = 'https://us-central1-camunda-researchanddevelopment.cloudfunctions.net/dave-song-request-gcp-http';
+  var messageName = 'Message_formSubmitted';
+  var correlationKey = formResponse.getItemResponses()[2].getResponse();
+  console.log(correlationKey);
+
+  return publishCamundaMessage(url, messageName, correlationKey, formResponseToJson(formResponse));
+
+}
+```
+
