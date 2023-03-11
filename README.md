@@ -34,7 +34,7 @@ So, I'll use a [Java Zeebe Client](https://docs.camunda.io/docs/apis-clients/jav
 
 ## OpenAI
 
-After someone submits a song request, I want to check if it's a "good" song. As I'm writing this, in March 2023, the latest buzz, of course, is all about [ChatGPT](https://chat.openai.com/)! So, I'll send each song recommendation to [OpenAI's completions Rest API](https://platform.openai.com/docs/api-reference/completions) in order to get an opinion about whether it's a good song request! This will be fun :-) 
+After someone submits a song request, I want to check if it's a "good" song :stuck_out_tongue:. As I'm writing this, in March 2023, the latest buzz, of course, is all about [ChatGPT](https://chat.openai.com/)! So, I'll send each song recommendation to [OpenAI's completions Rest API](https://platform.openai.com/docs/api-reference/completions) in order to get an opinion about whether it's a good song request! This will be fun :-) 
 
 ## Final Steps
 
