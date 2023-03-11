@@ -12,19 +12,31 @@ Imagine you're planning a family reunion, a school dance, or a company retreat. 
 
 There are many ways to implement this, but here's a solution I came up with to demonstrate how Camunda 8 can be used to make this a nice experience for my friends, and also automate as much as possible, so that it's less work for me :muscle:
 
-If everyone on my party invitation list was all on the social network, then this would be a lot easier. Unfortunately, that's not the case. For example, some of my friends and family are super active one Facebook, while others either don't even have accounts, or haven't logged on in years. But fortunately, everyone has an email address. So, I'll use [SendGrid](https://sendgrid.com/) to send email notifications to communicate with folks. In fact, I can use Camunda's [SendGrid Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/sendgrid/) to send email notifications right from my process diagram.
+## Email
 
-Notice that this also means that there is no central system which uniquely identifies all my friends and family. I don't have the luxury of a Active Directory that contains accounts for each invitee. Luckily, Camunda is flexible enough to work around this inconvenience :wink: 
+If everyone on my party invitation list were all on a single social network, then this would be a lot easier. Unfortunately, that's not the case. For example, some of my friends and family are very active one Facebook, while others either don't even have accounts, or haven't logged on in years. But fortunately, everyone has an email address. So, I'll use [SendGrid](https://sendgrid.com/) to send email notifications to communicate with folks. In fact, I can use Camunda's [SendGrid Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/sendgrid/) to send email notifications right from my Camunda process.
+
+## Authentication
+
+Notice that this also means that there is no central system which uniquely identifies all my friends and family. I don't have the luxury of a Active Directory that contains accounts for each invitee. Luckily, Camunda is flexible enough to work around this inconvenience :wink:. I'll treat email addresses as a unique identifier for each of my friends and family. Think of this as an "ad-hoc" Identity Provider!
+
+## Google Forms
 
 Of course, I could use [Camunda Forms](https://docs.camunda.io/docs/components/modeler/forms/camunda-forms-reference/). But since this is an demo on how to integrate different, third party services, I chose to use Google Forms. Here's what my Google form looks like: 
 
 ![](src/main/resources/google_form_1.png)
 
+## Google Cloud Functions
+
 I need some way to communicate back to Camunda that a user has submitted a Google Form, which brings us to the most complicated part of my solution. When designing systems in general, there is usually a tradeoff between flexibility and complexity. Camunda strives to make simple things easy and difficult things possible. The simple solution here would be to use an [Inbound HTTP Webhook Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/http-webhook/). But in this case, I chose to take advantage of a more powerful (and more complex) solution of using a custom Zeebe Client. 
  
 So, I'll use a [Java Zeebe Client](https://docs.camunda.io/docs/apis-clients/java-client/]to [publish a message](https://docs.camunda.io/docs/apis-clients/grpc/#publishmessage-rpc) back to Camunda whenever someone submits a Google Form. I could have hosted my Zeebe client java project anywhere, really, but in this case, I chose to use a [Google Cloud Function](https://cloud.google.com/functions). So, I will write a small bit of javascript that will run whenever someone submits my Google Form. The javascript will trigger a Google Cloud Function which will run my Zeebe Client Java code. My Zeebe Client java code will communicate the data entered into the Google Form to the process.  
 
+## OpenAI
+
 After someone submits a song request, I want to check if it's a "good" song. As I'm writing this, in March 2023, the latest buzz, of course, is all about [ChatGPT](https://chat.openai.com/)! So, I'll send each song recommendation to [OpenAI's completions Rest API](https://platform.openai.com/docs/api-reference/completions) in order to get an opinion about whether it's a good song request! This will be fun :-) 
+
+## Final Steps
 
 After I hear back from the machine learning algorithm, I'll send my friends one last email notification to let them know if the song was accepted or rejected. If the AI can't tell if a song is appropriate, I'll send a note to myself to manually review the song and either approve or reject. 
 
