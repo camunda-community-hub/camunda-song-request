@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="47aa12c" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.2.0" camunda:diagramRelationId="3e2c2cfc-8109-4414-8bee-9a99d44dc13a">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="47aa12c" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" camunda:diagramRelationId="3e2c2cfc-8109-4414-8bee-9a99d44dc13a">
   <bpmn:process id="Process_songRequest" name="Song Request" isExecutable="true">
     <bpmn:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_10je4nr">{
@@ -67,7 +67,7 @@
           <zeebe:input source="= person.email" target="to.email" />
           <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
           <zeebe:input source="d-647678a0f9a8493695b54d8e04341750" target="template.id" />
-          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;! I&#39;m collecting song requests for the upcoming &#34; + eventType + &#34;. Want to make a song request? If so, click below and fill out the form, thanks!&#34;,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;! I&#39;m collecting song requests for the upcoming &#34; + eventType + &#34;. Want to make a song request? If so, click below and fill out the form, thanks!&#34;,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: if is defined(google.form.url) then google.form.url else &#34;https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=pp_url&#38;entry.1440689558=&#34;+person.email&#10;}" target="template.data" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders />
       </bpmn:extensionElements>
@@ -102,7 +102,6 @@
     <bpmn:startEvent id="StartEvent_1" name="Create Instance">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
-          <zeebe:output source="=if is defined(google.form.url) &#10;then google.form.url &#10;else &#34;https://docs.google.com/forms/d/e/1FAIpQLSdA11QjZGguCtKnaEpssxt7lsgGv42D_Z22qEQ3jqInQ58PHw/viewform?usp=sf_link&#34;" target="google.form.url" />
           <zeebe:output source="=if is defined(person.name) &#10;then person.name &#10;else &#34;Dave&#34;" target="person.name" />
           <zeebe:output source="=if is defined(person.email) &#10;then person.email &#10;else &#34;david.paroulek@camunda.com&#34;" target="person.email" />
           <zeebe:output source="=&#34;wedding&#34;" target="eventType" />
@@ -161,7 +160,7 @@
           <zeebe:input source="= person.email" target="to.email" />
           <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
           <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
-          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, good news, your song request was accepted! I&#39;m looking forward to rocking out to &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;! Here&#39;s more details: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, good news, your song request was accepted! I&#39;m looking forward to rocking out to &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;! Here&#39;s more details: &#34; + result,&#10;  &#34;name&#34;: person.name&#10;}" target="template.data" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders />
       </bpmn:extensionElements>
@@ -182,7 +181,7 @@
           <zeebe:input source="= person.email" target="to.email" />
           <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
           <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
-          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, sorry, but your song request of &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34; is not appropritate for this event. Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, sorry, but your song request of &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34; is not appropritate for this event. Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name&#10;}" target="template.data" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders />
       </bpmn:extensionElements>
@@ -216,7 +215,7 @@
           <zeebe:input source="= person.email" target="to.email" />
           <zeebe:input source="byTemplate" target="unMappedFieldNotUseInModel.mailType" />
           <zeebe:input source="d-06289bdd22614780ae2813a124051242" target="template.id" />
-          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, thanks, your song request, &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;, is under review :-). Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name,&#10;  &#34;formUrl&#34;: google.form.url&#10;}" target="template.data" />
+          <zeebe:input source="={&#10;  &#34;message&#34;: &#34;Hi, &#34; + person.name + &#34;, thanks, your song request, &#39;&#34;+song.title+&#34;&#39; by &#34;+song.artist+&#34;, is under review :-). Here&#39;s why: &#34; + result,&#10;  &#34;name&#34;: person.name&#10;}" target="template.data" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders />
       </bpmn:extensionElements>
@@ -238,7 +237,7 @@
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="openaiResponse2" />
-          <zeebe:header key="resultExpression" value="={&#10;  &#34;song&#34;: {&#10;    &#34;lyrics&#34;: extract(body.choices[1].text, &#34;[^\n]+&#34;)[1]&#10;  }&#10;}" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;song&#34;: {&#10;    &#34;lyrics&#34;: body.choices[1].text,&#10;    &#34;title&#34;: song.title,&#10;    &#34;artist&#34;: song.artist&#10;  }&#10;}" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jdcjas</bpmn:incoming>
@@ -246,11 +245,11 @@
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0yy68t2" sourceRef="Activity_18eotyx" targetRef="Activity_1snrbr5" />
     <bpmn:textAnnotation id="TextAnnotation_0krxina">
-      <bpmn:text>Email the person a link to a google form. When the form is submitted, it calls a AWS Lambda Function and a row will be entered into a google sheet.</bpmn:text>
+      <bpmn:text>Email the person a link to a google form. When the form is submitted, it calls a Google Cloud Function and a row will be entered into a google sheet.</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0qf1gkf" sourceRef="Activity_1efnhia" targetRef="TextAnnotation_0krxina" />
     <bpmn:textAnnotation id="TextAnnotation_1458xg3">
-      <bpmn:text>When the Google Form is submitted, it calls an AWS Lambda function which uses the Zeebe GRPC API to publish a message to allow the process to continue</bpmn:text>
+      <bpmn:text>When the Google Form is submitted, it calls a Google Cloud function which uses the Zeebe GRPC API to publish a message to allow the process to continue</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0k04mfi" sourceRef="Event_0t5u3bb" targetRef="TextAnnotation_1458xg3" />
     <bpmn:textAnnotation id="TextAnnotation_0mx75ie">
@@ -261,6 +260,10 @@
       <bpmn:text>Start an instance with a payload containing `person.name`, `person.email`, and `eventType`</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_0ns9trk" sourceRef="StartEvent_1" targetRef="TextAnnotation_05lge6g" />
+    <bpmn:textAnnotation id="TextAnnotation_1atka0c">
+      <bpmn:text>If OpenAI is unsure whether the song is appropriate, use Camunda Forms to display the Song Lyrics and decide to approve or reject</bpmn:text>
+    </bpmn:textAnnotation>
+    <bpmn:association id="Association_0w8oy0p" sourceRef="Activity_1snrbr5" targetRef="TextAnnotation_1atka0c" />
   </bpmn:process>
   <bpmn:message id="Message_0hujtgf" name="Message_formSubmitted">
     <bpmn:extensionElements>
@@ -270,6 +273,10 @@
   <bpmn:message id="Message_1uqdi99" name="Message_createInstance" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_songRequest">
+      <bpmndi:BPMNShape id="TextAnnotation_1atka0c_di" bpmnElement="TextAnnotation_1atka0c">
+        <dc:Bounds x="757" y="375" width="165" height="84" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1na0nq0_di" bpmnElement="Activity_1efnhia" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="400" y="238" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -344,6 +351,10 @@
         <dc:Bounds x="950" y="450" width="100" height="80" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="Association_0w8oy0p_di" bpmnElement="Association_0w8oy0p">
+        <di:waypoint x="950" y="464" />
+        <di:waypoint x="922" y="450" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1fptfsv_di" bpmnElement="Flow_1fptfsv">
         <di:waypoint x="268" y="278" />
         <di:waypoint x="400" y="278" />
