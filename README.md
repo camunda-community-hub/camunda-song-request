@@ -2,19 +2,43 @@
 
 <img src="https://img.shields.io/badge/Tutorial%20Reference%20Project-Tutorials%20for%20getting%20started%20with%20Camunda-%2338A3E1" alt="A blue badge that reads: 'Tutorial Reference Project - Tutorials for getting started with Camunda'">
 
-This is an example of how to use the [Camunda 8 Platform](https://docs.camunda.io) to collect song requests from friends before a party.
+The focus of this example is to show how the [Camunda 8 Platform](https://docs.camunda.io) can be used to orchestrate various services together to build a useful solution. 
 
-Let's say you're in charge of planning a family reunion, or a school dance. You're planning to have a DJ or Band. You'd like to allow your friends to recommend songs for the party. One simple solution is to use a Google Forms, which are convenient and really great, but you'd rather not have to manually email google form links out to everyone manually. It would also be nice to periodically remind folks to fill out the form, but you don't want to overwhelm them with emails. And it would also be cool to somehow do a sanity check on song requests and filter out anything that's not appropriate, or just not right for the party. 
+# Scenario / Use Case
 
-Let's see how we can build this process. We'll use Camunda Platform 8 and try to make this nice experience for your friends, and also automate as much as possible so it's less work for you. 
+Imagine you're planning a family reunion, a school dance, or a company retreat. You're planning to have a DJ or Band, or Karaoke. You'd like to allow your friends to recommend songs for the party. Not all your friends have Facebook, or LinkedIn, but fortunately, they all have email addresses. You'd like to invite them to submit a form with a Song Artist and Title. Some of your friends think they're witty and will probably submit silly song requests that shouldn't be added to the official list. It'd be nice to automatically determine if a song request is appropriate for the event. Also, most of your friends have very short attention spans, so in case they open the email, and then get distracted, you should also send a periodic reminders for them to send in their song request.
 
-This example shows how to orchestrate a variety of services with Camunda 8. We'll use Send grid to send an email with a link to a Google Form. We can use a Google Cloud Function to send the results back when our friends submit the form. We'll even use OpenAI to get the lyrics for songs (Karaoke!) and also do a sanity check about whether the songs are a good match for the party.
+# My Solution
+
+There are many ways to implement this, but here's a solution I came up with to demonstrate how Camunda 8 can be used to make this a nice experience for my friends, and also automate as much as possible, so that it's less work for me :muscle:
+
+If everyone on my party invitation list was all on the social network, then this would be a lot easier. Unfortunately, that's not the case. For example, some of my friends and family are super active one Facebook, while others either don't even have accounts, or haven't logged on in years. But fortunately, everyone has an email address. So, I'll use [SendGrid](https://sendgrid.com/) to send email notifications to communicate with folks. In fact, I can use Camunda's [SendGrid Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/sendgrid/) to send email notifications right from my process diagram.
+
+Notice that this also means that there is no central system which uniquely identifies all my friends and family. I don't have the luxury of a Active Directory that contains accounts for each invitee. Luckily, Camunda is flexible enough to work around this inconvenience :wink: 
+
+Of course, I could use [Camunda Forms](https://docs.camunda.io/docs/components/modeler/forms/camunda-forms-reference/). But since this is an demo on how to integrate different, third party services, I chose to use Google Forms. Here's what my Google form looks like: 
+
+![](src/main/resources/google_form_1.png)
+
+I need some way to communicate back to Camunda that a user has submitted a Google Form, which brings us to the most complicated part of my solution. When designing systems in general, there is usually a tradeoff between flexibility and complexity. Camunda strives to make simple things easy and difficult things possible. The simple solution here would be to use an [Inbound HTTP Webhook Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/http-webhook/). But in this case, I chose to take advantage of a more powerful (and more complex) solution of using a custom Zeebe Client. 
+ 
+So, I'll use a [Java Zeebe Client](https://docs.camunda.io/docs/apis-clients/java-client/]to [publish a message](https://docs.camunda.io/docs/apis-clients/grpc/#publishmessage-rpc) back to Camunda whenever someone submits a Google Form. I could have hosted my Zeebe client java project anywhere, really, but in this case, I chose to use a [Google Cloud Function](https://cloud.google.com/functions). So, I will write a small bit of javascript that will run whenever someone submits my Google Form. The javascript will trigger a Google Cloud Function which will run my Zeebe Client Java code. My Zeebe Client java code will communicate the data entered into the Google Form to the process.  
+
+After someone submits a song request, I want to check if it's a "good" song. As I'm writing this, in March 2023, the latest buzz, of course, is all about [ChatGPT](https://chat.openai.com/)! So, I'll send each song recommendation to [OpenAI's completions Rest API](https://platform.openai.com/docs/api-reference/completions) in order to get an opinion about whether it's a good song request! This will be fun :-) 
+
+After I hear back from the machine learning algorithm, I'll send my friends one last email notification to let them know if the song was accepted or rejected. If the AI can't tell if a song is appropriate, I'll send a note to myself to manually review the song and either approve or reject. 
 
 # The Process Diagram
 
 [song-requests.bpmn](src/main/resources/song-requests.bpmn)
 
 ![](src/main/resources/song-requests.png)
+
+# Fun 
+
+Here are some funny results from OpenAI :-) 
+
+> Hi, Dave, sorry, but your song request of 'Fight for your right' by Beastie Boys is not appropritate for this event. Here's why: No, it is not appropriate for a wedding. The song is about partying and having fun, which is not usually the atmosphere at a wedding.
 
 # Installation and Setup
 
@@ -70,7 +94,14 @@ Also feel free to change the event type to whatever you want. Maybe a `family re
   }
 }
 ```
-
+```json
+{
+  "person": {
+    "name": "Dave",
+    "email": "david.paroulek@camunda.com"
+  }
+}
+```
 # Development
 
 ## Test Locally
