@@ -1,0 +1,7 @@
+{
+  "person": {
+    "name": "Dave",
+    "email": "david.paroulek@camunda.com"
+  },
+  "eventType": "Birthday Party"
+}

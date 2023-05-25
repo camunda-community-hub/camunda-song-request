@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="47aa12c" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" camunda:diagramRelationId="3e2c2cfc-8109-4414-8bee-9a99d44dc13a">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:color="http://www.omg.org/spec/BPMN/non-normative/color/1.0" xmlns:zeebe="http://camunda.org/schema/zeebe/1.0" xmlns:modeler="http://camunda.org/schema/modeler/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" id="Definitions_1" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Web Modeler" exporterVersion="385673f" modeler:executionPlatform="Camunda Cloud" modeler:executionPlatformVersion="8.1.0" camunda:diagramRelationId="3e2c2cfc-8109-4414-8bee-9a99d44dc13a">
   <bpmn:process id="Process_songRequest" name="Song Request" isExecutable="true">
     <bpmn:extensionElements>
       <zeebe:userTaskForm id="userTaskForm_10je4nr">{
@@ -75,7 +75,7 @@
       <bpmn:incoming>Flow_02wvxue</bpmn:incoming>
       <bpmn:outgoing>Flow_1oxifje</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_18q1yaj" sourceRef="Event_0t5u3bb" targetRef="Activity_1rc48h6" />
+    <bpmn:sequenceFlow id="Flow_18q1yaj" sourceRef="Event_0t5u3bb" targetRef="Activity_analyzeSongRequest" />
     <bpmn:intermediateCatchEvent id="Event_0t5u3bb" name="Form Submitted">
       <bpmn:extensionElements>
         <zeebe:ioMapping>
@@ -117,27 +117,7 @@
     <bpmn:sequenceFlow id="Flow_00xidjq" sourceRef="Gateway_1sqtjfv" targetRef="Event_0xc3wbw" />
     <bpmn:sequenceFlow id="Flow_1oxifje" sourceRef="Activity_1efnhia" targetRef="Gateway_1sqtjfv" />
     <bpmn:sequenceFlow id="Flow_1ebaflo" sourceRef="Gateway_1sqtjfv" targetRef="Event_0t5u3bb" />
-    <bpmn:sequenceFlow id="Flow_08o2aet" sourceRef="Activity_1rc48h6" targetRef="Gateway_1voduht" />
-    <bpmn:serviceTask id="Activity_1rc48h6" name="Analyze Song Request" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2018%2018%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M17.0335%208.99997C17.0335%2013.4475%2013.4281%2017.0529%208.98065%2017.0529C4.53316%2017.0529%200.927765%2013.4475%200.927765%208.99997C0.927765%204.55248%204.53316%200.947083%208.98065%200.947083C13.4281%200.947083%2017.0335%204.55248%2017.0335%208.99997Z%22%20fill%3D%22%23505562%22%2F%3E%0A%3Cpath%20d%3D%22M4.93126%2014.1571L6.78106%203.71471H10.1375C11.1917%203.71471%2011.9824%203.98323%2012.5095%204.52027C13.0465%205.04736%2013.315%205.73358%2013.315%206.57892C13.315%207.44414%2013.0714%208.15522%2012.5841%208.71215C12.1067%209.25913%2011.4553%209.63705%2010.6298%209.8459L12.0619%2014.1571H10.3315L9.03364%2010.0249H7.24351L6.51254%2014.1571H4.93126ZM7.49711%208.59281H9.24248C9.99832%208.59281%2010.5901%208.42374%2011.0177%208.08561C11.4553%207.73753%2011.6741%207.26513%2011.6741%206.66842C11.6741%206.19106%2011.5249%205.81811%2011.2265%205.54959C10.9282%205.27113%2010.4558%205.1319%209.80936%205.1319H8.10874L7.49711%208.59281Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E%0A">
-      <bpmn:extensionElements>
-        <zeebe:taskDefinition type="io.camunda:http-json:1" />
-        <zeebe:ioMapping>
-          <zeebe:input source="bearer" target="authentication.type" />
-          <zeebe:input source="post" target="method" />
-          <zeebe:input source="https://api.openai.com/v1/completions" target="url" />
-          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
-          <zeebe:input source="secrets.OPENAI_API_KEY" target="authentication.token" />
-          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
-          <zeebe:input source="={&#10;    &#34;model&#34;: &#34;text-davinci-003&#34;,&#10;    &#34;prompt&#34;: &#34;Is the song \&#34;&#34;+song.title+&#34;\&#34; by \&#34;&#34;+song.artist+&#34;\&#34; appropriate for a &#34;+eventType+&#34;?&#34;,&#10;    &#34;max_tokens&#34;: 1024,&#10;    &#34;temperature&#34;: 0&#10;}" target="body" />
-        </zeebe:ioMapping>
-        <zeebe:taskHeaders>
-          <zeebe:header key="resultVariable" value="openaiResponse1" />
-          <zeebe:header key="resultExpression" value="={&#10;  &#34;result&#34;: extract(body.choices[1].text, &#34;[^\n]+&#34;)[1],&#10;  &#34;appropriate&#34;: upper case(split(result, &#34;,\s&#34;)[1])&#10;}" />
-        </zeebe:taskHeaders>
-      </bpmn:extensionElements>
-      <bpmn:incoming>Flow_18q1yaj</bpmn:incoming>
-      <bpmn:outgoing>Flow_08o2aet</bpmn:outgoing>
-    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="Flow_08o2aet" sourceRef="Activity_analyzeSongRequest" targetRef="Gateway_1voduht" />
     <bpmn:exclusiveGateway id="Gateway_1voduht" name="Is this song appropriate?" default="Flow_0w1px0x">
       <bpmn:incoming>Flow_0ji8kku</bpmn:incoming>
       <bpmn:incoming>Flow_08o2aet</bpmn:incoming>
@@ -203,7 +183,7 @@
       <bpmn:incoming>Flow_0yy68t2</bpmn:incoming>
       <bpmn:outgoing>Flow_0ji8kku</bpmn:outgoing>
     </bpmn:userTask>
-    <bpmn:sequenceFlow id="Flow_1jdcjas" sourceRef="Activity_03rrb3p" targetRef="Activity_18eotyx" />
+    <bpmn:sequenceFlow id="Flow_1jdcjas" sourceRef="Activity_03rrb3p" targetRef="Activity_getSongLyrics" />
     <bpmn:serviceTask id="Activity_03rrb3p" name="Notify Song Request Under Review" zeebe:modelerTemplate="io.camunda.connectors.SendGrid.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%205.40847H5.43837V10.5611H0.285706V5.40847Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22white%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V15.6844H5.43837V10.5611Z%22%20fill%3D%22%2399E1F4%22%2F%3E%0A%3Cpath%20d%3D%22M0.285706%2015.6846L5.43837%2015.6844V15.7143H0.285706V15.6846ZM0.285706%2010.5619H5.43837V15.6844L0.285706%2015.6846V10.5619Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%200.285706H10.5611V5.40847H5.43837V0.285706ZM10.5616%205.43837H15.7143V10.5611H10.5616V5.43837Z%22%20fill%3D%22%2300B3E3%22%2F%3E%0A%3Cpath%20d%3D%22M5.43837%2010.5611L10.5611%2010.5616V5.40847H5.43837V10.5611Z%22%20fill%3D%22%23009DD9%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%200.285706H15.7143V5.40847H10.5611V0.285706Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3Cpath%20d%3D%22M10.5611%205.40847H15.7143V5.43837H10.5616L10.5611%205.40847Z%22%20fill%3D%22%231A82E2%22%2F%3E%0A%3C%2Fsvg%3E">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:sendgrid:1" />
@@ -223,27 +203,59 @@
       <bpmn:outgoing>Flow_1jdcjas</bpmn:outgoing>
     </bpmn:serviceTask>
     <bpmn:sequenceFlow id="Flow_0ji8kku" sourceRef="Activity_1snrbr5" targetRef="Gateway_1voduht" />
-    <bpmn:serviceTask id="Activity_18eotyx" name="Get Song Lyrics" zeebe:modelerTemplate="io.camunda.connectors.HttpJson.v2" zeebe:modelerTemplateIcon="data:image/svg+xml;utf8,%3Csvg%20width%3D%2218%22%20height%3D%2218%22%20viewBox%3D%220%200%2018%2018%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Cpath%20d%3D%22M17.0335%208.99997C17.0335%2013.4475%2013.4281%2017.0529%208.98065%2017.0529C4.53316%2017.0529%200.927765%2013.4475%200.927765%208.99997C0.927765%204.55248%204.53316%200.947083%208.98065%200.947083C13.4281%200.947083%2017.0335%204.55248%2017.0335%208.99997Z%22%20fill%3D%22%23505562%22%2F%3E%0A%3Cpath%20d%3D%22M4.93126%2014.1571L6.78106%203.71471H10.1375C11.1917%203.71471%2011.9824%203.98323%2012.5095%204.52027C13.0465%205.04736%2013.315%205.73358%2013.315%206.57892C13.315%207.44414%2013.0714%208.15522%2012.5841%208.71215C12.1067%209.25913%2011.4553%209.63705%2010.6298%209.8459L12.0619%2014.1571H10.3315L9.03364%2010.0249H7.24351L6.51254%2014.1571H4.93126ZM7.49711%208.59281H9.24248C9.99832%208.59281%2010.5901%208.42374%2011.0177%208.08561C11.4553%207.73753%2011.6741%207.26513%2011.6741%206.66842C11.6741%206.19106%2011.5249%205.81811%2011.2265%205.54959C10.9282%205.27113%2010.4558%205.1319%209.80936%205.1319H8.10874L7.49711%208.59281Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E%0A">
+    <bpmn:sequenceFlow id="Flow_0yy68t2" sourceRef="Activity_getSongLyrics" targetRef="Activity_1snrbr5" />
+    <bpmn:serviceTask id="Activity_analyzeSongRequest" name="Analyze Song Request" zeebe:modelerTemplate="io.camunda.connectors.OpenAI.v1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjU2cHgiIGhlaWdodD0iMjYwcHgiIHZpZXdCb3g9IjAgMCAyNTYgMjYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICAgIDx0aXRsZT5PcGVuQUk8L3RpdGxlPgogICAgPGc+CiAgICAgICAgPHBhdGggZD0iTTIzOS4xODM5MTQsMTA2LjIwMjc4MyBDMjQ1LjA1NDMwNCw4OC41MjQyMDk2IDI0My4wMjIyOCw2OS4xNzMzODA1IDIzMy42MDc1OTksNTMuMDk5ODg2NCBDMjE5LjQ1MTY3OCwyOC40NTg4MDIxIDE5MC45OTk3MDMsMTUuNzgzNjEyOSAxNjMuMjEzMDA3LDIxLjczOTUwNSBDMTQ3LjU1NDA3Nyw0LjMyMTQ1ODgzIDEyMy43OTQ5MDksLTMuNDIzOTg1NTQgMTAwLjg3OTAxLDEuNDE4NzM4OTggQzc3Ljk2MzExMDUsNi4yNjE0NjM0OSA1OS4zNjkwMDkzLDIyLjk1NzI1MzYgNTIuMDk1OTYyMSw0NS4yMjE0MjE5IEMzMy44NDM2NDk0LDQ4Ljk2NDQ4NjcgMTguMDkwMTcyMSw2MC4zOTI3NDkgOC44NjY3MjUxMyw3Ni41ODE4MDMzIEMtNS40NDM0OTEsMTAxLjE4Mjk2MiAtMi4xOTU0NDQzMSwxMzIuMjE1MjU1IDE2Ljg5ODY2NjIsMTUzLjMyMDA5NCBDMTEuMDA2MDg2NSwxNzAuOTkwNjU2IDEzLjAxOTcyODMsMTkwLjM0Mzk5MSAyMi40MjM4MjMxLDIwNi40MjI5OTEgQzM2LjU5NzU1NTMsMjMxLjA3MjM0NCA2NS4wNjgwMzQyLDI0My43NDY1NjYgOTIuODY5NTczOCwyMzcuNzgzMzcyIEMxMDUuMjM1NjM5LDI1MS43MDgyNDkgMTIzLjAwMTExMywyNTkuNjMwOTQyIDE0MS42MjM5NjgsMjU5LjUyNjkyIEMxNzAuMTA1MzU5LDI1OS41NTIxNjkgMTk1LjMzNzYxMSwyNDEuMTY1NzE4IDIwNC4wMzc3NzcsMjE0LjA0NTY2MSBDMjIyLjI4NzM0LDIxMC4yOTYzNTYgMjM4LjAzODQ4OSwxOTguODY5NzgzIDI0Ny4yNjcwMTQsMTgyLjY4NTI4IEMyNjEuNDA0NDUzLDE1OC4xMjc1MTUgMjU4LjE0MjQ5NCwxMjcuMjYyNzc1IDIzOS4xODM5MTQsMTA2LjIwMjc4MyBMMjM5LjE4MzkxNCwxMDYuMjAyNzgzIFogTTE0MS42MjM5NjgsMjQyLjU0MTIwNyBDMTMwLjI1NTY4MiwyNDIuNTU5MTc3IDExOS4yNDM4NzYsMjM4LjU3NDY0MiAxMTAuNTE5MzgxLDIzMS4yODYxOTcgTDExMi4wNTQxNDYsMjMwLjQxNjQ5NiBMMTYzLjcyNDU5NSwyMDAuNTkwODgxIEMxNjYuMzQwNjQ4LDE5OS4wNTY0NDQgMTY3Ljk1NDMyMSwxOTYuMjU2ODE4IDE2Ny45NzA3ODEsMTkzLjIyNDAwNSBMMTY3Ljk3MDc4MSwxMjAuMzczNzg4IEwxODkuODE1NjE0LDEzMy4wMTAwMjYgQzE5MC4wMzQxMzIsMTMzLjEyMTQyMyAxOTAuMTg2MjM1LDEzMy4zMzA1NjQgMTkwLjIyNDg4NSwxMzMuNTcyNzc0IEwxOTAuMjI0ODg1LDE5My45NDAyMjkgQzE5MC4xNjg2MDMsMjIwLjc1ODQyNyAxNjguNDQyMTY2LDI0Mi40ODQ4NjQgMTQxLjYyMzk2OCwyNDIuNTQxMjA3IFogTTM3LjE1NzU3NDksMTk3LjkzMDYyIEMzMS40NTY0OTgsMTg4LjA4NjM1OSAyOS40MDk0ODE4LDE3Ni41NDY5ODQgMzEuMzc2NjIzNywxNjUuMzQyNDI2IEwzMi45MTEzODk1LDE2Ni4yNjMyODUgTDg0LjYzMjk5NzMsMTk2LjA4ODkwMSBDODcuMjM4OTM0OSwxOTcuNjE4MjA3IDkwLjQ2ODI3MTcsMTk3LjYxODIwNyA5My4wNzQyMDkzLDE5Ni4wODg5MDEgTDE1Ni4yNTU0MDIsMTU5LjY2Mzc5MyBMMTU2LjI1NTQwMiwxODQuODg1MTExIEMxNTYuMjQzNTU3LDE4NS4xNDk3NzEgMTU2LjExMTcyNSwxODUuMzk0NjAyIDE1NS44OTcyOSwxODUuNTUwMTc2IEwxMDMuNTYxNzc2LDIxNS43MzM5MDMgQzgwLjMwNTQ5NTMsMjI5LjEzMTYzMiA1MC41OTI0OTU0LDIyMS4xNjU0MzUgMzcuMTU3NTc0OSwxOTcuOTMwNjIgWiBNMjMuNTQ5MzE4MSw4NS4zODExMjczIEMyOS4yODk5ODYxLDc1LjQ3MzMwOTcgMzguMzUxMTkxMSw2Ny45MTYyNjQ4IDQ5LjEyODc0ODIsNjQuMDQ3ODgyNSBMNDkuMTI4NzQ4MiwxMjUuNDM4NTE1IEM0OS4wODkxNDkyLDEyOC40NTk0MjUgNTAuNjk2NTM4NiwxMzEuMjYyNTU2IDUzLjMyMzc3NDgsMTMyLjc1NDIzMiBMMTE2LjE5ODAxNCwxNjkuMDI1ODY0IEw5NC4zNTMxODA4LDE4MS42NjIxMDIgQzk0LjExMzIzMjUsMTgxLjc4OTQzNCA5My44MjU3NDYxLDE4MS43ODk0MzQgOTMuNTg1Nzk3OSwxODEuNjYyMTAyIEw0MS4zNTI2MDE1LDE1MS41Mjk1MzQgQzE4LjE0MTk0MjYsMTM4LjA3NjA5OCAxMC4xODE3NjgxLDEwOC4zODU1NjIgMjMuNTQ5MzE4MSw4NS4xMjUzMzMgTDIzLjU0OTMxODEsODUuMzgxMTI3MyBaIE0yMDMuMDE0NiwxMjcuMDc1NTk4IEwxMzkuOTM1NzI1LDkwLjQ0NTg1NDUgTDE2MS43Mjk0LDc3Ljg2MDc3NDggQzE2MS45NjkzNDgsNzcuNzMzNDQzNCAxNjIuMjU2ODM0LDc3LjczMzQ0MzQgMTYyLjQ5Njc4Myw3Ny44NjA3NzQ4IEwyMTQuNzI5OTc5LDEwOC4wNDQ1MDIgQzIzMS4wMzIzMjksMTE3LjQ1MTc0NyAyNDAuNDM3Mjk0LDEzNS40MjYxMDkgMjM4Ljg3MTUwNCwxNTQuMTgyNzM5IEMyMzcuMzA1NzE0LDE3Mi45MzkzNjggMjI1LjA1MDcxOSwxODkuMTA1NTcyIDIwNy40MTQyNjIsMTk1LjY3OTYzIEwyMDcuNDE0MjYyLDEzNC4yODg5OTggQzIwNy4zMjI1MjEsMTMxLjI3Njg2NyAyMDUuNjUwNjk3LDEyOC41MzU4NTMgMjAzLjAxNDYsMTI3LjA3NTU5OCBaIE0yMjQuNzU3MTE2LDk0LjM4NTA4NjcgTDIyMy4yMjIzNSw5My40NjQyMjcyIEwxNzEuNjAzMDYsNjMuMzgyODE3MyBDMTY4Ljk4MTI5Myw2MS44NDQzNzUxIDE2NS43MzI0NTYsNjEuODQ0Mzc1MSAxNjMuMTEwNjg5LDYzLjM4MjgxNzMgTDk5Ljk4MDY1NTQsOTkuODA3OTI1OSBMOTkuOTgwNjU1NCw3NC41ODY2MDc3IEM5OS45NTMzMDA0LDc0LjMyNTQwODggMTAwLjA3MTA5NSw3NC4wNzAxODY5IDEwMC4yODc2MDksNzMuOTIxNTQyNiBMMTUyLjUyMDgwNSw0My43ODg5NzM4IEMxNjguODYzMDk4LDM0LjM3NDM1MTggMTg5LjE3NDI1NiwzNS4yNTI5MDQzIDIwNC42NDI1NzksNDYuMDQzNDg0MSBDMjIwLjExMDkwMyw1Ni44MzQwNjM4IDIyNy45NDkyNjksNzUuNTkyMzk1OSAyMjQuNzU3MTE2LDk0LjE4MDQ1MTMgTDIyNC43NTcxMTYsOTQuMzg1MDg2NyBaIE04OC4wNjA2NDA5LDEzOS4wOTc5MzEgTDY2LjIxNTgwNzYsMTI2LjUxMjg1MSBDNjUuOTk1MDM5OSwxMjYuMzc5MDkxIDY1Ljg0NTA5NjUsMTI2LjE1NDE3NiA2NS44MDY1MzY3LDEyNS44OTg5NDUgTDY1LjgwNjUzNjcsNjUuNjg0OTY2IEM2NS44MzE0NDk1LDQ2LjgyODUzNjcgNzYuNzUwMDYwNSwyOS42ODQ2MDMyIDkzLjgyNzA4NTIsMjEuNjg4MzA1NSBDMTEwLjkwNDExLDEzLjY5MjAwNzkgMTMxLjA2MzgzMywxNi4yODM1NDYyIDE0NS41NjMyLDI4LjMzODk5OCBMMTQ0LjAyODQzNCwyOS4yMDg2OTg2IEw5Mi4zNTc5ODUyLDU5LjAzNDMxNDIgQzg5Ljc0MTkzMjcsNjAuNTY4NzUxMyA4OC4xMjgyNTk3LDYzLjM2ODM3NjcgODguMTExNzk5OCw2Ni40MDExOTAxIEw4OC4wNjA2NDA5LDEzOS4wOTc5MzEgWiBNOTkuOTI5NDk2NSwxMTMuNTE4NSBMMTI4LjA2Njg3LDk3LjMwMTE0MTcgTDE1Ni4yNTU0MDIsMTEzLjUxODUgTDE1Ni4yNTU0MDIsMTQ1Ljk1MzIxOCBMMTI4LjE2OTE4NywxNjIuMTcwNTc3IEw5OS45ODA2NTU0LDE0NS45NTMyMTggTDk5LjkyOTQ5NjUsMTEzLjUxODUgWiIgZmlsbD0iIzAwMDAwMCI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4K">
       <bpmn:extensionElements>
         <zeebe:taskDefinition type="io.camunda:http-json:1" />
         <zeebe:ioMapping>
           <zeebe:input source="bearer" target="authentication.type" />
-          <zeebe:input source="post" target="method" />
-          <zeebe:input source="https://api.openai.com/v1/completions" target="url" />
-          <zeebe:input source="={&#10;  &#34;Content-Type&#34;: &#34;application/json&#34;&#10;}" target="headers" />
           <zeebe:input source="secrets.OPENAI_API_KEY" target="authentication.token" />
-          <zeebe:input source="20" target="connectionTimeoutInSeconds" />
-          <zeebe:input source="={&#10;    &#34;model&#34;: &#34;text-davinci-003&#34;,&#10;    &#34;prompt&#34;: &#34;What are the lyrics for &#39;&#34;+song.title+&#34;&#39; by &#39;&#34;+song.artist+&#34;&#39;?&#34;,&#10;    &#34;max_tokens&#34;: 1024,&#10;    &#34;temperature&#34;: 0&#10;}" target="body" />
+          <zeebe:input source="=if is defined(internal_organization) and internal_organization != null then {&#34;Content-Type&#34;:&#34;application/json&#34;, &#34;OpenAI-Organization&#34;:internal_organization} else {&#34;Content-Type&#34;:&#34;application/json&#34;}" target="headers" />
+          <zeebe:input source="chat" target="operation" />
+          <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="gpt-3.5-turbo" target="internal_model" />
+          <zeebe:input source="Begin answer with Yes or No, followed by a comma, followed by an explanation of why" target="internal_systemMessage" />
+          <zeebe:input source="=&#34;Is \&#34;&#34;+song.title+&#34;\&#34; by \&#34;&#34;+song.artist+&#34;\&#34; appropriate for a &#34;eventType&#34;?" target="internal_prompt" />
+          <zeebe:input source="1" target="internal_choices" />
+          <zeebe:input source="=append(concatenate(if is defined(internal_systemMessage) then [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: internal_systemMessage}] else [], if is defined(internal_chatHistory) then internal_chatHistory else []), {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: internal_prompt})" target="internal_messages" />
+          <zeebe:input source="={&#34;model&#34;: internal_model, &#34;messages&#34;: internal_messages, &#34;n&#34;: number(internal_choices)}" target="body" />
+          <zeebe:input source="30" target="connectionTimeoutInSeconds" />
+        </zeebe:ioMapping>
+        <zeebe:taskHeaders>
+          <zeebe:header key="resultVariable" value="openaiResponse1" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;result&#34;: body.choices[1].message.content,&#10;  &#34;appropriate&#34;: upper case(split(result, &#34;,\s&#34;)[1])&#10;}" />
+        </zeebe:taskHeaders>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_18q1yaj</bpmn:incoming>
+      <bpmn:outgoing>Flow_08o2aet</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:serviceTask id="Activity_getSongLyrics" name="Get Song Lyrics" zeebe:modelerTemplate="io.camunda.connectors.OpenAI.v1" zeebe:modelerTemplateIcon="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyB3aWR0aD0iMjU2cHgiIGhlaWdodD0iMjYwcHgiIHZpZXdCb3g9IjAgMCAyNTYgMjYwIiB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHByZXNlcnZlQXNwZWN0UmF0aW89InhNaWRZTWlkIj4KICAgIDx0aXRsZT5PcGVuQUk8L3RpdGxlPgogICAgPGc+CiAgICAgICAgPHBhdGggZD0iTTIzOS4xODM5MTQsMTA2LjIwMjc4MyBDMjQ1LjA1NDMwNCw4OC41MjQyMDk2IDI0My4wMjIyOCw2OS4xNzMzODA1IDIzMy42MDc1OTksNTMuMDk5ODg2NCBDMjE5LjQ1MTY3OCwyOC40NTg4MDIxIDE5MC45OTk3MDMsMTUuNzgzNjEyOSAxNjMuMjEzMDA3LDIxLjczOTUwNSBDMTQ3LjU1NDA3Nyw0LjMyMTQ1ODgzIDEyMy43OTQ5MDksLTMuNDIzOTg1NTQgMTAwLjg3OTAxLDEuNDE4NzM4OTggQzc3Ljk2MzExMDUsNi4yNjE0NjM0OSA1OS4zNjkwMDkzLDIyLjk1NzI1MzYgNTIuMDk1OTYyMSw0NS4yMjE0MjE5IEMzMy44NDM2NDk0LDQ4Ljk2NDQ4NjcgMTguMDkwMTcyMSw2MC4zOTI3NDkgOC44NjY3MjUxMyw3Ni41ODE4MDMzIEMtNS40NDM0OTEsMTAxLjE4Mjk2MiAtMi4xOTU0NDQzMSwxMzIuMjE1MjU1IDE2Ljg5ODY2NjIsMTUzLjMyMDA5NCBDMTEuMDA2MDg2NSwxNzAuOTkwNjU2IDEzLjAxOTcyODMsMTkwLjM0Mzk5MSAyMi40MjM4MjMxLDIwNi40MjI5OTEgQzM2LjU5NzU1NTMsMjMxLjA3MjM0NCA2NS4wNjgwMzQyLDI0My43NDY1NjYgOTIuODY5NTczOCwyMzcuNzgzMzcyIEMxMDUuMjM1NjM5LDI1MS43MDgyNDkgMTIzLjAwMTExMywyNTkuNjMwOTQyIDE0MS42MjM5NjgsMjU5LjUyNjkyIEMxNzAuMTA1MzU5LDI1OS41NTIxNjkgMTk1LjMzNzYxMSwyNDEuMTY1NzE4IDIwNC4wMzc3NzcsMjE0LjA0NTY2MSBDMjIyLjI4NzM0LDIxMC4yOTYzNTYgMjM4LjAzODQ4OSwxOTguODY5NzgzIDI0Ny4yNjcwMTQsMTgyLjY4NTI4IEMyNjEuNDA0NDUzLDE1OC4xMjc1MTUgMjU4LjE0MjQ5NCwxMjcuMjYyNzc1IDIzOS4xODM5MTQsMTA2LjIwMjc4MyBMMjM5LjE4MzkxNCwxMDYuMjAyNzgzIFogTTE0MS42MjM5NjgsMjQyLjU0MTIwNyBDMTMwLjI1NTY4MiwyNDIuNTU5MTc3IDExOS4yNDM4NzYsMjM4LjU3NDY0MiAxMTAuNTE5MzgxLDIzMS4yODYxOTcgTDExMi4wNTQxNDYsMjMwLjQxNjQ5NiBMMTYzLjcyNDU5NSwyMDAuNTkwODgxIEMxNjYuMzQwNjQ4LDE5OS4wNTY0NDQgMTY3Ljk1NDMyMSwxOTYuMjU2ODE4IDE2Ny45NzA3ODEsMTkzLjIyNDAwNSBMMTY3Ljk3MDc4MSwxMjAuMzczNzg4IEwxODkuODE1NjE0LDEzMy4wMTAwMjYgQzE5MC4wMzQxMzIsMTMzLjEyMTQyMyAxOTAuMTg2MjM1LDEzMy4zMzA1NjQgMTkwLjIyNDg4NSwxMzMuNTcyNzc0IEwxOTAuMjI0ODg1LDE5My45NDAyMjkgQzE5MC4xNjg2MDMsMjIwLjc1ODQyNyAxNjguNDQyMTY2LDI0Mi40ODQ4NjQgMTQxLjYyMzk2OCwyNDIuNTQxMjA3IFogTTM3LjE1NzU3NDksMTk3LjkzMDYyIEMzMS40NTY0OTgsMTg4LjA4NjM1OSAyOS40MDk0ODE4LDE3Ni41NDY5ODQgMzEuMzc2NjIzNywxNjUuMzQyNDI2IEwzMi45MTEzODk1LDE2Ni4yNjMyODUgTDg0LjYzMjk5NzMsMTk2LjA4ODkwMSBDODcuMjM4OTM0OSwxOTcuNjE4MjA3IDkwLjQ2ODI3MTcsMTk3LjYxODIwNyA5My4wNzQyMDkzLDE5Ni4wODg5MDEgTDE1Ni4yNTU0MDIsMTU5LjY2Mzc5MyBMMTU2LjI1NTQwMiwxODQuODg1MTExIEMxNTYuMjQzNTU3LDE4NS4xNDk3NzEgMTU2LjExMTcyNSwxODUuMzk0NjAyIDE1NS44OTcyOSwxODUuNTUwMTc2IEwxMDMuNTYxNzc2LDIxNS43MzM5MDMgQzgwLjMwNTQ5NTMsMjI5LjEzMTYzMiA1MC41OTI0OTU0LDIyMS4xNjU0MzUgMzcuMTU3NTc0OSwxOTcuOTMwNjIgWiBNMjMuNTQ5MzE4MSw4NS4zODExMjczIEMyOS4yODk5ODYxLDc1LjQ3MzMwOTcgMzguMzUxMTkxMSw2Ny45MTYyNjQ4IDQ5LjEyODc0ODIsNjQuMDQ3ODgyNSBMNDkuMTI4NzQ4MiwxMjUuNDM4NTE1IEM0OS4wODkxNDkyLDEyOC40NTk0MjUgNTAuNjk2NTM4NiwxMzEuMjYyNTU2IDUzLjMyMzc3NDgsMTMyLjc1NDIzMiBMMTE2LjE5ODAxNCwxNjkuMDI1ODY0IEw5NC4zNTMxODA4LDE4MS42NjIxMDIgQzk0LjExMzIzMjUsMTgxLjc4OTQzNCA5My44MjU3NDYxLDE4MS43ODk0MzQgOTMuNTg1Nzk3OSwxODEuNjYyMTAyIEw0MS4zNTI2MDE1LDE1MS41Mjk1MzQgQzE4LjE0MTk0MjYsMTM4LjA3NjA5OCAxMC4xODE3NjgxLDEwOC4zODU1NjIgMjMuNTQ5MzE4MSw4NS4xMjUzMzMgTDIzLjU0OTMxODEsODUuMzgxMTI3MyBaIE0yMDMuMDE0NiwxMjcuMDc1NTk4IEwxMzkuOTM1NzI1LDkwLjQ0NTg1NDUgTDE2MS43Mjk0LDc3Ljg2MDc3NDggQzE2MS45NjkzNDgsNzcuNzMzNDQzNCAxNjIuMjU2ODM0LDc3LjczMzQ0MzQgMTYyLjQ5Njc4Myw3Ny44NjA3NzQ4IEwyMTQuNzI5OTc5LDEwOC4wNDQ1MDIgQzIzMS4wMzIzMjksMTE3LjQ1MTc0NyAyNDAuNDM3Mjk0LDEzNS40MjYxMDkgMjM4Ljg3MTUwNCwxNTQuMTgyNzM5IEMyMzcuMzA1NzE0LDE3Mi45MzkzNjggMjI1LjA1MDcxOSwxODkuMTA1NTcyIDIwNy40MTQyNjIsMTk1LjY3OTYzIEwyMDcuNDE0MjYyLDEzNC4yODg5OTggQzIwNy4zMjI1MjEsMTMxLjI3Njg2NyAyMDUuNjUwNjk3LDEyOC41MzU4NTMgMjAzLjAxNDYsMTI3LjA3NTU5OCBaIE0yMjQuNzU3MTE2LDk0LjM4NTA4NjcgTDIyMy4yMjIzNSw5My40NjQyMjcyIEwxNzEuNjAzMDYsNjMuMzgyODE3MyBDMTY4Ljk4MTI5Myw2MS44NDQzNzUxIDE2NS43MzI0NTYsNjEuODQ0Mzc1MSAxNjMuMTEwNjg5LDYzLjM4MjgxNzMgTDk5Ljk4MDY1NTQsOTkuODA3OTI1OSBMOTkuOTgwNjU1NCw3NC41ODY2MDc3IEM5OS45NTMzMDA0LDc0LjMyNTQwODggMTAwLjA3MTA5NSw3NC4wNzAxODY5IDEwMC4yODc2MDksNzMuOTIxNTQyNiBMMTUyLjUyMDgwNSw0My43ODg5NzM4IEMxNjguODYzMDk4LDM0LjM3NDM1MTggMTg5LjE3NDI1NiwzNS4yNTI5MDQzIDIwNC42NDI1NzksNDYuMDQzNDg0MSBDMjIwLjExMDkwMyw1Ni44MzQwNjM4IDIyNy45NDkyNjksNzUuNTkyMzk1OSAyMjQuNzU3MTE2LDk0LjE4MDQ1MTMgTDIyNC43NTcxMTYsOTQuMzg1MDg2NyBaIE04OC4wNjA2NDA5LDEzOS4wOTc5MzEgTDY2LjIxNTgwNzYsMTI2LjUxMjg1MSBDNjUuOTk1MDM5OSwxMjYuMzc5MDkxIDY1Ljg0NTA5NjUsMTI2LjE1NDE3NiA2NS44MDY1MzY3LDEyNS44OTg5NDUgTDY1LjgwNjUzNjcsNjUuNjg0OTY2IEM2NS44MzE0NDk1LDQ2LjgyODUzNjcgNzYuNzUwMDYwNSwyOS42ODQ2MDMyIDkzLjgyNzA4NTIsMjEuNjg4MzA1NSBDMTEwLjkwNDExLDEzLjY5MjAwNzkgMTMxLjA2MzgzMywxNi4yODM1NDYyIDE0NS41NjMyLDI4LjMzODk5OCBMMTQ0LjAyODQzNCwyOS4yMDg2OTg2IEw5Mi4zNTc5ODUyLDU5LjAzNDMxNDIgQzg5Ljc0MTkzMjcsNjAuNTY4NzUxMyA4OC4xMjgyNTk3LDYzLjM2ODM3NjcgODguMTExNzk5OCw2Ni40MDExOTAxIEw4OC4wNjA2NDA5LDEzOS4wOTc5MzEgWiBNOTkuOTI5NDk2NSwxMTMuNTE4NSBMMTI4LjA2Njg3LDk3LjMwMTE0MTcgTDE1Ni4yNTU0MDIsMTEzLjUxODUgTDE1Ni4yNTU0MDIsMTQ1Ljk1MzIxOCBMMTI4LjE2OTE4NywxNjIuMTcwNTc3IEw5OS45ODA2NTU0LDE0NS45NTMyMTggTDk5LjkyOTQ5NjUsMTEzLjUxODUgWiIgZmlsbD0iIzAwMDAwMCI+PC9wYXRoPgogICAgPC9nPgo8L3N2Zz4K">
+      <bpmn:extensionElements>
+        <zeebe:taskDefinition type="io.camunda:http-json:1" />
+        <zeebe:ioMapping>
+          <zeebe:input source="bearer" target="authentication.type" />
+          <zeebe:input source="secrets.OPENAI_API_KEY" target="authentication.token" />
+          <zeebe:input source="=if is defined(internal_organization) and internal_organization != null then {&#34;Content-Type&#34;:&#34;application/json&#34;, &#34;OpenAI-Organization&#34;:internal_organization} else {&#34;Content-Type&#34;:&#34;application/json&#34;}" target="headers" />
+          <zeebe:input source="chat" target="operation" />
+          <zeebe:input source="post" target="method" />
+          <zeebe:input source="https://api.openai.com/v1/chat/completions" target="url" />
+          <zeebe:input source="gpt-3.5-turbo" target="internal_model" />
+          <zeebe:input source="You are a helpful assistant" target="internal_systemMessage" />
+          <zeebe:input source="=&#34;What are the lyrics of \&#34;&#34;+song.title+&#34;\&#34; by \&#34;&#34;+song.artist+&#34;\&#34;&#34;" target="internal_prompt" />
+          <zeebe:input source="1" target="internal_choices" />
+          <zeebe:input source="=append(concatenate(if is defined(internal_systemMessage) then [{&#34;role&#34;: &#34;system&#34;, &#34;content&#34;: internal_systemMessage}] else [], if is defined(internal_chatHistory) then internal_chatHistory else []), {&#34;role&#34;: &#34;user&#34;, &#34;content&#34;: internal_prompt})" target="internal_messages" />
+          <zeebe:input source="={&#34;model&#34;: internal_model, &#34;messages&#34;: internal_messages, &#34;n&#34;: number(internal_choices)}" target="body" />
+          <zeebe:input source="30" target="connectionTimeoutInSeconds" />
         </zeebe:ioMapping>
         <zeebe:taskHeaders>
           <zeebe:header key="resultVariable" value="openaiResponse2" />
-          <zeebe:header key="resultExpression" value="={&#10;  &#34;song&#34;: {&#10;    &#34;lyrics&#34;: body.choices[1].text,&#10;    &#34;title&#34;: song.title,&#10;    &#34;artist&#34;: song.artist&#10;  }&#10;}" />
+          <zeebe:header key="resultExpression" value="={&#10;  &#34;song&#34;: {&#10;    &#34;lyrics&#34;: body.choices[1].message.content,&#10;    &#34;title&#34;: song.title,&#10;    &#34;artist&#34;: song.artist&#10;  }&#10;}" />
         </zeebe:taskHeaders>
       </bpmn:extensionElements>
       <bpmn:incoming>Flow_1jdcjas</bpmn:incoming>
       <bpmn:outgoing>Flow_0yy68t2</bpmn:outgoing>
     </bpmn:serviceTask>
-    <bpmn:sequenceFlow id="Flow_0yy68t2" sourceRef="Activity_18eotyx" targetRef="Activity_1snrbr5" />
     <bpmn:textAnnotation id="TextAnnotation_0krxina">
       <bpmn:text>Email the person a link to a google form. When the form is submitted, it calls a Google Cloud Function and a row will be entered into a google sheet.</bpmn:text>
     </bpmn:textAnnotation>
@@ -255,7 +267,7 @@
     <bpmn:textAnnotation id="TextAnnotation_0mx75ie">
       <bpmn:text>Ask OpenAI whether this song is appropriate for the type of event</bpmn:text>
     </bpmn:textAnnotation>
-    <bpmn:association id="Association_0g55kw6" sourceRef="Activity_1rc48h6" targetRef="TextAnnotation_0mx75ie" />
+    <bpmn:association id="Association_0g55kw6" sourceRef="Activity_analyzeSongRequest" targetRef="TextAnnotation_0mx75ie" />
     <bpmn:textAnnotation id="TextAnnotation_05lge6g">
       <bpmn:text>Start an instance with a payload containing `person.name`, `person.email`, and `eventType`</bpmn:text>
     </bpmn:textAnnotation>
@@ -273,10 +285,6 @@
   <bpmn:message id="Message_1uqdi99" name="Message_createInstance" />
   <bpmndi:BPMNDiagram id="BPMNDiagram_1">
     <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="Process_songRequest">
-      <bpmndi:BPMNShape id="TextAnnotation_1atka0c_di" bpmnElement="TextAnnotation_1atka0c">
-        <dc:Bounds x="757" y="375" width="165" height="84" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Activity_1na0nq0_di" bpmnElement="Activity_1efnhia" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
         <dc:Bounds x="400" y="238" width="100" height="80" />
         <bpmndi:BPMNLabel />
@@ -293,6 +301,9 @@
           <dc:Bounds x="492" y="415" width="61" height="27" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1shp747_di" bpmnElement="Event_04rxyr5">
+        <dc:Bounds x="1302" y="212" width="36" height="36" />
+      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="Event_17x2x2y_di" bpmnElement="StartEvent_1">
         <dc:Bounds x="232" y="260" width="36" height="36" />
         <bpmndi:BPMNLabel>
@@ -302,9 +313,33 @@
       <bpmndi:BPMNShape id="Gateway_05p7m0s_di" bpmnElement="Gateway_1sqtjfv">
         <dc:Bounds x="555" y="253" width="50" height="50" />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1t7491d_di" bpmnElement="Activity_1rc48h6" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="790" y="238" width="100" height="80" />
+      <bpmndi:BPMNShape id="Gateway_1voduht_di" bpmnElement="Gateway_1voduht" isMarkerVisible="true">
+        <dc:Bounds x="985" y="253" width="50" height="50" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="939" y="236" width="62" height="27" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_01is50u_di" bpmnElement="Activity_0x5mude" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
+        <dc:Bounds x="1120" y="140" width="100" height="80" />
         <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1big0x0_di" bpmnElement="Activity_0xlgndj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
+        <dc:Bounds x="1120" y="238" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_065siqv_di" bpmnElement="Activity_1snrbr5">
+        <dc:Bounds x="950" y="450" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_144et18_di" bpmnElement="Activity_03rrb3p" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
+        <dc:Bounds x="1120" y="340" width="100" height="80" />
+        <bpmndi:BPMNLabel />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_02llzd5_di" bpmnElement="Activity_analyzeSongRequest" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="790" y="238" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_1pnwuf5_di" bpmnElement="Activity_getSongLyrics" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
+        <dc:Bounds x="1120" y="450" width="100" height="80" />
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape id="TextAnnotation_0krxina_di" bpmnElement="TextAnnotation_0krxina">
         <dc:Bounds x="350" y="120" width="188" height="84" />
@@ -322,39 +357,10 @@
         <dc:Bounds x="160" y="120" width="139" height="84" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Event_1shp747_di" bpmnElement="Event_04rxyr5">
-        <dc:Bounds x="1302" y="212" width="36" height="36" />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Gateway_1voduht_di" bpmnElement="Gateway_1voduht" isMarkerVisible="true">
-        <dc:Bounds x="985" y="253" width="50" height="50" />
-        <bpmndi:BPMNLabel>
-          <dc:Bounds x="939" y="236" width="62" height="27" />
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_01is50u_di" bpmnElement="Activity_0x5mude" bioc:stroke="#205022" bioc:fill="#c8e6c9" color:background-color="#c8e6c9" color:border-color="#205022">
-        <dc:Bounds x="1120" y="140" width="100" height="80" />
+      <bpmndi:BPMNShape id="TextAnnotation_1atka0c_di" bpmnElement="TextAnnotation_1atka0c">
+        <dc:Bounds x="757" y="375" width="165" height="84" />
         <bpmndi:BPMNLabel />
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_1big0x0_di" bpmnElement="Activity_0xlgndj" bioc:stroke="#831311" bioc:fill="#ffcdd2" color:background-color="#ffcdd2" color:border-color="#831311">
-        <dc:Bounds x="1120" y="238" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_144et18_di" bpmnElement="Activity_03rrb3p" bioc:stroke="#6b3c00" bioc:fill="#ffe0b2" color:background-color="#ffe0b2" color:border-color="#6b3c00">
-        <dc:Bounds x="1120" y="340" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_0q3po0p_di" bpmnElement="Activity_18eotyx" bioc:stroke="#0d4372" bioc:fill="#bbdefb" color:background-color="#bbdefb" color:border-color="#0d4372">
-        <dc:Bounds x="1120" y="450" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape id="Activity_065siqv_di" bpmnElement="Activity_1snrbr5">
-        <dc:Bounds x="950" y="450" width="100" height="80" />
-        <bpmndi:BPMNLabel />
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge id="Association_0w8oy0p_di" bpmnElement="Association_0w8oy0p">
-        <di:waypoint x="950" y="464" />
-        <di:waypoint x="922" y="450" />
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_1fptfsv_di" bpmnElement="Flow_1fptfsv">
         <di:waypoint x="268" y="278" />
         <di:waypoint x="400" y="278" />
@@ -422,6 +428,14 @@
         <di:waypoint x="1170" y="420" />
         <di:waypoint x="1170" y="450" />
       </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0ji8kku_di" bpmnElement="Flow_0ji8kku">
+        <di:waypoint x="1000" y="450" />
+        <di:waypoint x="1000" y="293" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_0yy68t2_di" bpmnElement="Flow_0yy68t2">
+        <di:waypoint x="1120" y="490" />
+        <di:waypoint x="1050" y="490" />
+      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Association_0qf1gkf_di" bpmnElement="Association_0qf1gkf">
         <di:waypoint x="436" y="238" />
         <di:waypoint x="424" y="204" />
@@ -438,13 +452,9 @@
         <di:waypoint x="245" y="261" />
         <di:waypoint x="229" y="204" />
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0ji8kku_di" bpmnElement="Flow_0ji8kku">
-        <di:waypoint x="1000" y="450" />
-        <di:waypoint x="1000" y="293" />
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge id="Flow_0yy68t2_di" bpmnElement="Flow_0yy68t2">
-        <di:waypoint x="1120" y="490" />
-        <di:waypoint x="1050" y="490" />
+      <bpmndi:BPMNEdge id="Association_0w8oy0p_di" bpmnElement="Association_0w8oy0p">
+        <di:waypoint x="950" y="464" />
+        <di:waypoint x="922" y="450" />
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>

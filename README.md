@@ -79,8 +79,7 @@ gcloud functions deploy dave-song-request-gcp-http \
 10. TODO: describe how to configure Send grid templates
 11. Create a Camunda SaaS Secret named `OPENAI_API_KEY` with your OpenAI API Key
 12. Upload the `src/main/resources/song-request.bpm` file to your SaaS web modeler (or open in desktop modeler). 
-13. Deploy the Song Request process to your Camunda 8 SaaS Cluster. 
-14. Create the following secrets in your Camunda 8 SaaS environment.
+13. Deploy the Song Request process to your Camunda 8 SaaS Cluster.
 
 # Start a Process Instance
 
