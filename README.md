@@ -30,7 +30,7 @@ Of course, I could use [Camunda Forms](https://docs.camunda.io/docs/components/m
 
 I need some way to communicate back to Camunda that a user has submitted a Google Form, which brings us to the most complicated part of my solution. When designing systems in general, there is usually a tradeoff between flexibility and complexity. Camunda strives to make simple things easy and difficult things possible. The simple solution here would be to use an [Inbound HTTP Webhook Connector](https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/http-webhook/). But in this case, I chose to take advantage of a more powerful (and more complex) solution of using a custom Zeebe Client. 
  
-So, I'll use a [Java Zeebe Client](https://docs.camunda.io/docs/apis-clients/java-client/) to [publish a message](https://docs.camunda.io/docs/apis-clients/grpc/#publishmessage-rpc) back to Camunda whenever someone submits a Google Form. I could have hosted my Zeebe client java project anywhere, really, but in this case, I chose to use a [Google Cloud Function](https://cloud.google.com/functions). So, I will register a [small bit of javascript](src/main/resources/Code.js) that will run whenever someone submits my Google Form. The javascript will trigger my custom [Google Cloud Function](src/main/java/io/camunda/example/songrequest/CloudFunctionMain.java) which will run my Zeebe Client Java code. My Zeebe Client java code will communicate the data entered into the Google Form to the process.  
+So, I'll use a [Java Zeebe Client](https://docs.camunda.io/docs/apis-clients/java-client/) to [publish a message](https://docs.camunda.io/docs/apis-clients/grpc/#publishmessage-rpc) back to Camunda whenever someone submits a Google Form. I could have hosted my Zeebe client java project anywhere, really, but in this case, I chose to use a [Google Cloud Function](https://cloud.google.com/functions). So, I will register a [small bit of javascript](src/main/resources/Code.gs) that will run whenever someone submits my Google Form. The javascript will trigger my custom [Google Cloud Function](src/main/java/io/camunda/example/songrequest/CloudFunctionMain.java) which will run my Zeebe Client Java code. My Zeebe Client java code will communicate the data entered into the Google Form to the process.  
 
 ## OpenAI
 
@@ -72,14 +72,16 @@ gcloud functions deploy dave-song-request-gcp-http \
   --source target/deploy \
   --memory 512MB
 ```
-6. TODO: describe how to configure google form
-7. If you don't have one already, create an OpenAI account and create an OpenAI API Key
-8. Create a Camunda SaaS Secret named `SENDGRID_API_KEY` with your OpenAI API Key
-9. If you don't have one already, create a Sendgrid account and create an API Key
-10. TODO: describe how to configure Send grid templates
-11. Create a Camunda SaaS Secret named `OPENAI_API_KEY` with your OpenAI API Key
-12. Upload the `src/main/resources/song-request.bpm` file to your SaaS web modeler (or open in desktop modeler). 
-13. Deploy the Song Request process to your Camunda 8 SaaS Cluster.
+6. Create a Google Form and add the required fields as described above. 
+7. Open the `Script Editor` on your Google Form. Copy and paste the contents of [Code.gs](src/main/resources/Code.gs) into a new Apps Script file named `Code.gs`. 
+8. Update line 64 in your [Code.gs](src/main/resources/Code.gs) Apps Script to reference your own Google Function URL. 
+9. If you don't have one already, create an OpenAI account and create an OpenAI API Key
+10. Create a Camunda SaaS Secret named `OPENAI_API_KEY` with your OpenAI API Key
+11. If you don't have one already, create a Sendgrid account and create an API Key
+12. Create a Camunda SaaS Secret named `SENDGRID_API_KEY` with your OpenAI API Key
+13. Create a SendGrid Email Template for each sendgrid connector task and update the [song-requests.bpmn](src/main/resources/song-requests.bpmn) to match. (Or, you can change to use `simple` email templates inside the [song-requests.bpmn](src/main/resources/song-requests.bpmn))
+14. Upload the [song-request.bpmn](src/main/resources/song-request.bpmn) file to your SaaS web modeler (or open in desktop modeler). 
+15. Deploy the Song Request process to your Camunda 8 SaaS Cluster.
 
 # Start a Process Instance
 

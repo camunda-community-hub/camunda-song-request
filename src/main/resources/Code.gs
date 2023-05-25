@@ -61,7 +61,7 @@ function formResponseToJson(formResponse) {
 function onFormSubmit(e) {
   var formResponse = e.response;
 
-  var url = 'https://us-central1-camunda-researchanddevelopment.cloudfunctions.net/dave-song-request-gcp-http';
+  var url = 'https://us-central1-YOUR_PROJECT.cloudfunctions.net/YOUR_FUNCTION';
   var messageName = 'Message_formSubmitted';
   var correlationKey = formResponse.getItemResponses()[2].getResponse();
   console.log(correlationKey);
