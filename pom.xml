@@ -18,7 +18,7 @@
 
   <properties>
     <java.version>11</java.version>
-    <zeebe.version>8.1.6</zeebe.version>
+    <zeebe.version>8.3.3</zeebe.version>
     <spring-zeebe.version>8.1.10</spring-zeebe.version>
     <spring-cloud-function.version>4.0.2-SNAPSHOT</spring-cloud-function.version>
     <spring-cloud-function-adapter-gcp.version>3.2.4</spring-cloud-function-adapter-gcp.version>
